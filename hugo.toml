@@ -1,0 +1,37 @@
+baseURL = "https://zijieguo2003.github.io"
+languageCode = "zh-cn"
+title = "ZijieGuo 的技术博客"
+theme = "PaperMod"
+
+[params]
+  author = "ZijieGuo"
+  description = "技术教程与学习笔记"
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  defaultTheme = "auto"
+
+[params.homeInfoParams]
+  Title = "Hi, 我是 ZijieGuo"
+  Content = "这里分享技术教程和学习笔记"
+
+[[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/zijieguo2003"
+
+[menu]
+  [[menu.main]]
+    name = "文章"
+    url = "/posts/"
+    weight = 10
+  [[menu.main]]
+    name = "标签"
+    url = "/tags/"
+    weight = 20
+
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
