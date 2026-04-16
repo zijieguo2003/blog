@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zijieguo2003.github.io/sitemap.xml
+Sitemap: https://zijieguo2003.github.io/blog/sitemap.xml
