@@ -1,0 +1,319 @@
+/* ═══════════════════════════════════════════════════
+   Ink Blueprint — ZijieGuo Blog
+   Loaded automatically by PaperMod via extended/ dir
+   ═══════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── Light Mode Variables ─── */
+:root {
+    --theme: #F8F7F4;
+    --entry: #FFFFFF;
+    --primary: #1C1917;
+    --secondary: #78716C;
+    --tertiary: #F1F0EC;
+    --content: #292524;
+    --code-block-bg: #1E2230;
+    --code-bg: #F1F0EC;
+    --border: #E7E5E4;
+    --accent: #2563EB;
+    --accent-hover: #1D4ED8;
+    --accent-soft: rgba(37, 99, 235, 0.07);
+}
+
+/* ─── Dark Mode Variables ─── */
+:root[data-theme="dark"] {
+    --theme: #13151A;
+    --entry: #1C1F26;
+    --primary: #E2E0DA;
+    --secondary: #9CA3AF;
+    --tertiary: #252A35;
+    --content: #D6D3CA;
+    --code-block-bg: #1A1D2A;
+    --code-bg: #1E2230;
+    --border: #2E3244;
+    --accent: #93C5FD;
+    --accent-hover: #BFDBFE;
+    --accent-soft: rgba(147, 197, 253, 0.07);
+}
+
+/* ─── Base Typography ─── */
+body {
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB",
+                 "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'IBM Plex Mono', "PingFang SC", "Microsoft YaHei", monospace;
+}
+
+code, pre, kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+    font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* ─── Logo & Nav ─── */
+.logo a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+#menu a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.15s ease;
+}
+
+#menu a:hover {
+    color: var(--accent);
+}
+
+/* ─── profileMode — Avatar ─── */
+.profile_inner img {
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    box-shadow: 4px 4px 0 var(--accent);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile_inner img:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--accent);
+}
+
+/* ─── profileMode — Title & Subtitle ─── */
+.profile_inner h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.profile_inner > span {
+    color: var(--secondary);
+    font-size: 0.95rem;
+}
+
+/* ─── profileMode — Buttons ─── */
+.buttons {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1.25rem;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    padding: 0.3rem 1rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    background: transparent;
+    text-decoration: none !important;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.button:hover {
+    background: var(--accent);
+    color: #fff !important;
+}
+
+/* ─── Post Entry Cards ─── */
+.post-entry {
+    border: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    border-radius: 6px;
+    background: var(--entry);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    transition: border-left-color 0.15s ease, transform 0.15s ease;
+}
+
+.post-entry:hover {
+    border-left-color: var(--accent);
+    transform: translateX(3px);
+}
+
+.post-entry:hover .entry-header h2 {
+    color: var(--accent);
+}
+
+.entry-header h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', "PingFang SC", monospace;
+    transition: color 0.15s ease;
+    margin: 0;
+}
+
+.entry-footer {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.77rem;
+    color: var(--secondary);
+    margin-top: 0.5rem;
+}
+
+/* ─── Article Headings with Accent Marker ─── */
+.post-single .post-content h2,
+.post-single .post-content h3 {
+    position: relative;
+    padding-left: 0.9rem;
+    margin-top: 2.25rem;
+}
+
+.post-single .post-content h2::before,
+.post-single .post-content h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    width: 3px;
+    height: 0.75em;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+/* ─── Content Links ─── */
+.post-content a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s ease, color 0.15s ease;
+}
+
+.post-content a:hover {
+    color: var(--accent-hover);
+    text-decoration-color: currentColor;
+}
+
+/* ─── Blockquote ─── */
+.post-content blockquote {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 4px 4px 0;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1.25rem;
+    font-style: italic;
+    color: var(--secondary);
+}
+
+.post-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* ─── Code Blocks ─── */
+.highlight {
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin: 1.25rem 0;
+}
+
+.highlight > div {
+    overflow-x: auto;
+}
+
+/* Inline code */
+code:not(pre > code) {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1em 0.45em;
+    font-size: 0.85em;
+    color: var(--primary);
+}
+
+/* ─── Tags ─── */
+.post-tags a,
+.terms-tags a {
+    background: var(--tertiary);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.18rem 0.55rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.77rem;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.post-tags a:hover,
+.terms-tags a:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* ─── TOC ─── */
+.toc {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    background: var(--entry);
+}
+
+/* ─── Post Meta ─── */
+.post-meta,
+.post-meta * {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+}
+
+/* ─── Social Icons ─── */
+.social-icons a {
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.social-icons a:hover {
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* ─── Search Input ─── */
+#searchbox input[type="text"] {
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--entry);
+    color: var(--primary);
+    font-family: 'IBM Plex Mono', monospace;
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    transition: border-color 0.15s ease;
+}
+
+#searchbox input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ─── Breadcrumbs ─── */
+.breadcrumbs {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--secondary);
+}
+
+/* ─── Footer ─── */
+.footer {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--secondary);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
