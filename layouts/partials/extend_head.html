@@ -1,0 +1,27 @@
+<script>
+    (function () {
+        var html = document.documentElement;
+        var defaults = {
+            "code-theme": "ink",
+            "ui-font": "system",
+            "code-font": "jetbrains"
+        };
+
+        function storageGet(key) {
+            try {
+                return localStorage.getItem(key);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        Object.keys(defaults).forEach(function (key) {
+            var value = storageGet("pref-" + key) || defaults[key];
+            var dataKey = key.replace(/-([a-z])/g, function (_, letter) {
+                return letter.toUpperCase();
+            });
+            html.dataset[dataKey] = value;
+        });
+    })();
+</script>
+

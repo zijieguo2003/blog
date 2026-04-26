@@ -1,0 +1,116 @@
+{{- define "main" }}
+
+{{- $pages := .RegularPages }}
+{{- $topics := site.Params.postTopics | default (slice) }}
+
+<header class="page-header topics-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- if .Description }}
+  <div class="post-description">{{ .Description | markdownify }}</div>
+  {{- end }}
+</header>
+
+{{- if .Content }}
+<div class="md-content topics-intro">
+  {{- if not (.Param "disableAnchoredHeadings") }}
+  {{- partial "anchored_headings.html" .Content -}}
+  {{- else }}{{ .Content }}{{ end }}
+</div>
+{{- end }}
+
+{{- if gt (len $topics) 0 }}
+<section class="topic-grid" aria-label="文章专题">
+  {{- range $index, $topic := $topics }}
+  {{- $matchTerms := $topic.match | default (slice $topic.name) }}
+  {{- $matches := slice }}
+  {{- range $pages }}
+    {{- $terms := slice }}
+    {{- with .Params.tags }}{{ $terms = union $terms . }}{{ end }}
+    {{- with .Params.categories }}{{ $terms = union $terms . }}{{ end }}
+    {{- with .Params.keywords }}{{ $terms = union $terms . }}{{ end }}
+    {{- if gt (len (intersect $terms $matchTerms)) 0 }}
+      {{- $matches = $matches | append . }}
+    {{- end }}
+  {{- end }}
+  {{- $topicID := printf "topic-%s" ($topic.name | urlize) }}
+  <a class="topic-card" href="#{{ $topicID }}" style="--topic-accent: {{ $topic.accent | default "var(--accent)" }};">
+    <span class="topic-index">{{ printf "%02d" (add $index 1) }}</span>
+    <span class="topic-body">
+      <strong>{{ $topic.name }}</strong>
+      <span>{{ $topic.description }}</span>
+    </span>
+    <span class="topic-count">{{ len $matches }} 篇</span>
+  </a>
+  {{- end }}
+</section>
+
+<div class="topic-sections">
+  {{- range $topic := $topics }}
+  {{- $matchTerms := $topic.match | default (slice $topic.name) }}
+  {{- $matches := slice }}
+  {{- range $pages }}
+    {{- $terms := slice }}
+    {{- with .Params.tags }}{{ $terms = union $terms . }}{{ end }}
+    {{- with .Params.categories }}{{ $terms = union $terms . }}{{ end }}
+    {{- with .Params.keywords }}{{ $terms = union $terms . }}{{ end }}
+    {{- if gt (len (intersect $terms $matchTerms)) 0 }}
+      {{- $matches = $matches | append . }}
+    {{- end }}
+  {{- end }}
+  {{- $topicID := printf "topic-%s" ($topic.name | urlize) }}
+  <section class="topic-section" id="{{ $topicID }}" style="--topic-accent: {{ $topic.accent | default "var(--accent)" }};">
+    <div class="topic-section-head">
+      <h2>{{ $topic.name }}</h2>
+      <p>{{ $topic.description }}</p>
+    </div>
+    {{- if gt (len $matches) 0 }}
+    <div class="topic-post-list">
+      {{- range first 6 (sort $matches "Date" "desc") }}
+      <article class="topic-post">
+        <a href="{{ .Permalink }}">
+          <span class="topic-post-title">{{ .Title }}</span>
+          {{- with .Description }}
+          <span class="topic-post-desc">{{ . }}</span>
+          {{- else }}
+          <span class="topic-post-desc">{{ .Summary | plainify | htmlUnescape }}</span>
+          {{- end }}
+          <span class="topic-post-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+            {{- if .ReadingTime }} · {{ .ReadingTime }} min{{ end }}
+          </span>
+        </a>
+      </article>
+      {{- end }}
+    </div>
+    {{- else }}
+    <p class="topic-empty">这个专题还在等第一篇文章。</p>
+    {{- end }}
+  </section>
+  {{- end }}
+</div>
+{{- end }}
+
+{{- if gt (len $pages) 0 }}
+<section class="all-posts-compact" aria-label="全部文章">
+  <div class="topic-section-head">
+    <h2>全部文章</h2>
+    <p>按发布时间倒序排列，适合快速扫一遍最近更新。</p>
+  </div>
+  <div class="topic-post-list">
+    {{- range sort $pages "Date" "desc" }}
+    <article class="topic-post all-post">
+      <a href="{{ .Permalink }}">
+        <span class="topic-post-title">{{ .Title }}</span>
+        <span class="topic-post-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+          {{- with .Params.categories }} · {{ delimit . " / " }}{{ end }}
+        </span>
+      </a>
+    </article>
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+
+{{- end }}

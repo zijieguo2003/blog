@@ -13,6 +13,7 @@ enableGitInfo = true
   author = "ZijieGuo"
   description = "技术教程与学习笔记"
   keywords = ["Hugo", "PaperMod", "技术博客", "ZijieGuo"]
+  mainSections = ["posts"]
   DateFormat = "2006-01-02"
   defaultTheme = "auto"
   ShowReadingTime = true
@@ -45,6 +46,25 @@ enableGitInfo = true
   favicon16x16 = "favicon.jpg"
   favicon32x32 = "favicon.jpg"
   apple_touch_icon = "favicon.jpg"
+
+[params.editPost]
+  URL = "https://github.com/zijieguo2003/blog/edit/master/content"
+  Text = "在线编辑"
+  appendFilePath = true
+  vscodeURL = "https://github.dev/zijieguo2003/blog/blob/master/content"
+  vscodeText = "Web IDE"
+
+[[params.postTopics]]
+  name = "Harness工程"
+  description = "围绕 Agent、工具调用、调试记录和工程化实践的系统笔记。"
+  match = ["Harness工程", "Claude Code", "Agent", "LLM", "源码阅读", "Debug"]
+  accent = "#2563EB"
+
+[[params.postTopics]]
+  name = "生活随笔"
+  description = "零散观察、阶段复盘，以及不完全技术向的记录。"
+  match = ["生活随笔", "生活", "随笔"]
+  accent = "#D97706"
 
 [params.fuseOpts]
   isCaseSensitive = false
@@ -89,6 +109,8 @@ enableGitInfo = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+  [markup.highlight]
+    noClasses = false
 
 [sitemap]
   changefreq = "weekly"

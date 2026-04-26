@@ -1,0 +1,14 @@
+{{- if and (or .Params.editPost.URL site.Params.editPost.URL) (not (.Param "editPost.disabled")) -}}
+{{- $fileUrlPath := path.Join .File.Path }}
+{{- $editURL := .Params.editPost.URL | default site.Params.editPost.URL }}
+{{- $appendPath := .Params.editPost.appendFilePath | default (site.Params.editPost.appendFilePath | default false) }}
+{{- $editText := .Params.editPost.Text | default (site.Params.editPost.Text | default (i18n "edit_post" | default "Edit")) }}
+{{- if or .Params.author site.Params.author (.Param "ShowReadingTime") (not .Date.IsZero) .IsTranslated }}&nbsp;|&nbsp;{{- end -}}
+<span class="post-edit-links">
+    <a href="{{ $editURL }}{{ if $appendPath }}/{{ $fileUrlPath }}{{ end }}" rel="noopener noreferrer edit" target="_blank">{{ $editText }}</a>
+    {{- with site.Params.editPost.vscodeURL }}
+    {{- $vscodeText := site.Params.editPost.vscodeText | default "Web IDE" -}}
+    <span aria-hidden="true"> · </span><a href="{{ . }}/{{ $fileUrlPath }}" rel="noopener noreferrer" target="_blank">{{ $vscodeText }}</a>
+    {{- end }}
+</span>
+{{- end }}

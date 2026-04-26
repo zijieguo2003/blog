@@ -1,0 +1,101 @@
+<div class="pref-switcher" data-pref-switcher>
+    <button class="pref-toggle" id="pref-toggle" type="button" aria-expanded="false" aria-controls="pref-panel" title="阅读偏好" aria-label="阅读偏好">Aa</button>
+    <div class="pref-panel" id="pref-panel" hidden>
+        <label>
+            <span>代码风格</span>
+            <select data-pref-select="code-theme">
+                <option value="ink">Ink Blueprint</option>
+                <option value="github">GitHub</option>
+                <option value="anthropic">Anthropic</option>
+                <option value="one-dark">One Dark</option>
+            </select>
+        </label>
+        <label>
+            <span>阅读字体</span>
+            <select data-pref-select="ui-font">
+                <option value="system">系统默认</option>
+                <option value="serif">中文衬线</option>
+                <option value="kai">楷体手记</option>
+                <option value="mono">Mono Note</option>
+            </select>
+        </label>
+        <label>
+            <span>代码字体</span>
+            <select data-pref-select="code-font">
+                <option value="jetbrains">JetBrains Mono</option>
+                <option value="cascadia">Cascadia Code</option>
+                <option value="ibm">IBM Plex Mono</option>
+                <option value="consolas">Consolas</option>
+            </select>
+        </label>
+    </div>
+</div>
+
+<script>
+    (function () {
+        var root = document.querySelector("[data-pref-switcher]");
+        if (!root) return;
+
+        var html = document.documentElement;
+        var toggle = root.querySelector("#pref-toggle");
+        var panel = root.querySelector("#pref-panel");
+        var defaults = {
+            "code-theme": "ink",
+            "ui-font": "system",
+            "code-font": "jetbrains"
+        };
+
+        function dataKey(key) {
+            return key.replace(/-([a-z])/g, function (_, letter) {
+                return letter.toUpperCase();
+            });
+        }
+
+        function storageGet(key) {
+            try {
+                return localStorage.getItem(key);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function storageSet(key, value) {
+            try {
+                localStorage.setItem(key, value);
+            } catch (error) {}
+        }
+
+        function apply(key, value) {
+            html.dataset[dataKey(key)] = value;
+            storageSet("pref-" + key, value);
+        }
+
+        root.querySelectorAll("[data-pref-select]").forEach(function (select) {
+            var key = select.dataset.prefSelect;
+            var value = storageGet("pref-" + key) || defaults[key];
+            select.value = value;
+            apply(key, value);
+            select.addEventListener("change", function () {
+                apply(key, select.value);
+            });
+        });
+
+        function setOpen(open) {
+            panel.hidden = !open;
+            toggle.setAttribute("aria-expanded", String(open));
+        }
+
+        toggle.addEventListener("click", function () {
+            setOpen(panel.hidden);
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!root.contains(event.target)) setOpen(false);
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") setOpen(false);
+        });
+    })();
+</script>
+
