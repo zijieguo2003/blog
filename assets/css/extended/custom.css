@@ -21,6 +21,8 @@
     --code-keyword: #d97757;
     --code-string: #8aa06c;
     --code-number: #dca07f;
+    --code-name: #faf9f5;
+    --code-punctuation: #d8d0bf;
     --code-function: #8bb5dc;
     --code-type: #e2c36e;
     --code-operator: #6a9bcc;
@@ -51,6 +53,8 @@
     --code-keyword: #eea082;
     --code-string: #a6b37f;
     --code-number: #e2ad8d;
+    --code-name: #faf9f5;
+    --code-punctuation: #d8d0bf;
     --code-function: #91b5d8;
     --code-type: #e4c875;
     --code-operator: #7fb0dd;
@@ -763,6 +767,8 @@ html[data-code-theme="ink"] {
     --code-keyword: #d97757;
     --code-string: #8aa06c;
     --code-number: #dca07f;
+    --code-name: #faf9f5;
+    --code-punctuation: #d8d0bf;
     --code-function: #8bb5dc;
     --code-type: #e2c36e;
     --code-operator: #6a9bcc;
@@ -779,6 +785,8 @@ html[data-code-theme="github"] {
     --code-keyword: #a40e26;
     --code-string: #063b78;
     --code-number: #034b96;
+    --code-name: #1f2328;
+    --code-punctuation: #4b535d;
     --code-function: #6639ba;
     --code-type: #7a3900;
     --code-operator: #034b96;
@@ -795,6 +803,8 @@ html[data-code-theme="anthropic"] {
     --code-keyword: #743018;
     --code-string: #28593a;
     --code-number: #7f4517;
+    --code-name: #241c15;
+    --code-punctuation: #6f5138;
     --code-function: #573a83;
     --code-type: #5a4a20;
     --code-operator: #623d2b;
@@ -811,6 +821,8 @@ html[data-code-theme="one-dark"] {
     --code-keyword: #C678DD;
     --code-string: #98C379;
     --code-number: #D19A66;
+    --code-name: #ABB2BF;
+    --code-punctuation: #C9D1D9;
     --code-function: #61AFEF;
     --code-type: #E5C07B;
     --code-operator: #56B6C2;
@@ -879,6 +891,21 @@ html[data-code-theme] .chroma .mi,
 html[data-code-theme] .chroma .il,
 html[data-code-theme] .chroma .mo {
     color: var(--code-number);
+}
+
+html[data-code-theme] .chroma .n,
+html[data-code-theme] .chroma .nx,
+html[data-code-theme] .chroma .x,
+html[data-code-theme] .chroma .nv,
+html[data-code-theme] .chroma .vc,
+html[data-code-theme] .chroma .vg,
+html[data-code-theme] .chroma .vi,
+html[data-code-theme] .chroma .vm {
+    color: var(--code-name);
+}
+
+html[data-code-theme] .chroma .p {
+    color: var(--code-punctuation);
 }
 
 html[data-code-theme] .chroma .nf,
