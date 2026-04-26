@@ -91,14 +91,8 @@ code, pre, kbd {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(250, 249, 245, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--theme);
     border-bottom: 1px solid var(--border);
-}
-
-:root[data-theme="dark"] .header {
-    background: rgba(20, 20, 19, 0.92);
 }
 
 .header-nav {
@@ -315,6 +309,11 @@ code, pre, kbd {
 }
 
 /* ─── Code Blocks ─── */
+/* override PaperMod's hardcoded rgb(213,213,214) for plain pre code blocks */
+.md-content pre code {
+    color: var(--code-fg) !important;
+}
+
 .highlight {
     border-radius: 12px;
     border: 1px solid var(--border);
