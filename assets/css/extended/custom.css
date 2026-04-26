@@ -83,22 +83,74 @@ code, pre, kbd {
 }
 
 /* ─── Logo & Nav ─── */
+.header {
+    background: color-mix(in srgb, var(--theme) 92%, var(--entry));
+    border-bottom: 1px solid var(--tertiary);
+}
+
+.header-nav {
+    min-height: var(--header-height);
+    line-height: 1;
+}
+
+.logo,
+.menu {
+    margin: auto var(--gap);
+}
+
 .logo a {
     font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1.08rem;
     font-weight: 600;
     letter-spacing: 0;
+    color: var(--primary);
+}
+
+.logo a:hover {
+    color: var(--accent);
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    color: var(--secondary);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
 }
 
 #menu a {
     font-family: 'Poppins', Arial, sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
+    font-weight: 500;
     letter-spacing: 0;
-    text-transform: uppercase;
-    transition: color 0.15s ease;
+    color: var(--primary);
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+#menu span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    border-bottom: 2px solid transparent;
 }
 
 #menu a:hover {
     color: var(--accent);
+}
+
+#menu span.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
 }
 
 /* ─── profileMode — Avatar ─── */
