@@ -4,7 +4,7 @@
         <label>
             <span>代码风格</span>
             <select data-pref-select="code-theme">
-                <option value="ink">Ink Blueprint</option>
+                <option value="ink">Warm Minimal</option>
                 <option value="github">GitHub</option>
                 <option value="anthropic">Anthropic</option>
                 <option value="one-dark">One Dark</option>
@@ -13,7 +13,7 @@
         <label>
             <span>阅读字体</span>
             <select data-pref-select="ui-font">
-                <option value="system">系统默认</option>
+                <option value="system">Poppins / Lora</option>
                 <option value="serif">中文衬线</option>
                 <option value="kai">楷体手记</option>
                 <option value="mono">Mono Note</option>
@@ -22,11 +22,19 @@
         <label>
             <span>代码字体</span>
             <select data-pref-select="code-font">
+                <option value="system">系统等宽</option>
                 <option value="jetbrains">JetBrains Mono</option>
                 <option value="cascadia">Cascadia Code</option>
                 <option value="ibm">IBM Plex Mono</option>
                 <option value="consolas">Consolas</option>
             </select>
+        </label>
+        <label>
+            <span>文章宽度</span>
+            <div class="pref-range-row">
+                <input type="range" min="760" max="1280" step="40" data-pref-range="content-width">
+                <output data-pref-output="content-width"></output>
+            </div>
         </label>
     </div>
 </div>
@@ -42,7 +50,8 @@
         var defaults = {
             "code-theme": "ink",
             "ui-font": "system",
-            "code-font": "jetbrains"
+            "code-font": "system",
+            "content-width": "1040"
         };
 
         function dataKey(key) {
@@ -53,7 +62,11 @@
 
         function storageGet(key) {
             try {
-                return localStorage.getItem(key);
+                var value = localStorage.getItem(key);
+                if (key === "pref-code-font" && value === "jetbrains" && !localStorage.getItem("pref-v2")) {
+                    return null;
+                }
+                return value;
             } catch (error) {
                 return null;
             }
@@ -66,6 +79,11 @@
         }
 
         function apply(key, value) {
+            if (key === "content-width") {
+                html.style.setProperty("--reader-width", value + "px");
+                storageSet("pref-" + key, value);
+                return;
+            }
             html.dataset[dataKey(key)] = value;
             storageSet("pref-" + key, value);
         }
@@ -79,6 +97,23 @@
                 apply(key, select.value);
             });
         });
+
+        root.querySelectorAll("[data-pref-range]").forEach(function (range) {
+            var key = range.dataset.prefRange;
+            var output = root.querySelector('[data-pref-output="' + key + '"]');
+            var value = storageGet("pref-" + key) || defaults[key];
+            range.value = value;
+
+            function render() {
+                if (output) output.textContent = range.value + "px";
+                apply(key, range.value);
+            }
+
+            render();
+            range.addEventListener("input", render);
+        });
+
+        storageSet("pref-v2", "1");
 
         function setOpen(open) {
             panel.hidden = !open;

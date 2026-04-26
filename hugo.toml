@@ -58,13 +58,13 @@ enableGitInfo = true
   name = "Harness工程"
   description = "围绕 Agent、工具调用、调试记录和工程化实践的系统笔记。"
   match = ["Harness工程", "Claude Code", "Agent", "LLM", "源码阅读", "Debug"]
-  accent = "#2563EB"
+  accent = "#d97757"
 
 [[params.postTopics]]
   name = "生活随笔"
   description = "零散观察、阶段复盘，以及不完全技术向的记录。"
   match = ["生活随笔", "生活", "随笔"]
-  accent = "#D97706"
+  accent = "#788c5d"
 
 [params.fuseOpts]
   isCaseSensitive = false

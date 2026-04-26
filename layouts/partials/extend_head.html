@@ -4,12 +4,17 @@
         var defaults = {
             "code-theme": "ink",
             "ui-font": "system",
-            "code-font": "jetbrains"
+            "code-font": "system",
+            "content-width": "1040"
         };
 
         function storageGet(key) {
             try {
-                return localStorage.getItem(key);
+                var value = localStorage.getItem(key);
+                if (key === "pref-code-font" && value === "jetbrains" && !localStorage.getItem("pref-v2")) {
+                    return null;
+                }
+                return value;
             } catch (error) {
                 return null;
             }
@@ -17,6 +22,10 @@
 
         Object.keys(defaults).forEach(function (key) {
             var value = storageGet("pref-" + key) || defaults[key];
+            if (key === "content-width") {
+                html.style.setProperty("--reader-width", value + "px");
+                return;
+            }
             var dataKey = key.replace(/-([a-z])/g, function (_, letter) {
                 return letter.toUpperCase();
             });

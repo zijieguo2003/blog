@@ -1,68 +1,74 @@
 /* ═══════════════════════════════════════════════════
-   Ink Blueprint — ZijieGuo Blog
+   Warm Minimal — ZijieGuo Blog
    Loaded automatically by PaperMod via extended/ dir
    ═══════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Lora:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
 
 /* ─── Light Mode Variables ─── */
 :root {
-    --theme: #F8F7F4;
-    --entry: #FFFFFF;
-    --primary: #1C1917;
-    --secondary: #78716C;
-    --tertiary: #F1F0EC;
-    --content: #292524;
-    --code-block-bg: #1E2230;
-    --code-bg: #F1F0EC;
-    --border: #E7E5E4;
-    --accent: #2563EB;
-    --accent-hover: #1D4ED8;
-    --accent-soft: rgba(37, 99, 235, 0.07);
+    --theme: #faf9f5;
+    --entry: #fffdfa;
+    --primary: #141413;
+    --secondary: #7b7971;
+    --tertiary: #e8e6dc;
+    --content: #141413;
+    --code-block-bg: #141413;
+    --code-bg: #e8e6dc;
+    --border: #dedbd0;
+    --accent: #d97757;
+    --accent-hover: #b95f42;
+    --accent-soft: rgba(217, 119, 87, 0.12);
+    --accent-blue: #6a9bcc;
+    --accent-green: #788c5d;
+    --reader-width: 1040px;
 }
 
 /* ─── Dark Mode Variables ─── */
 :root[data-theme="dark"] {
-    --theme: #13151A;
-    --entry: #1C1F26;
-    --primary: #E2E0DA;
-    --secondary: #9CA3AF;
-    --tertiary: #252A35;
-    --content: #D6D3CA;
-    --code-block-bg: #1A1D2A;
-    --code-bg: #1E2230;
-    --border: #2E3244;
-    --accent: #93C5FD;
-    --accent-hover: #BFDBFE;
-    --accent-soft: rgba(147, 197, 253, 0.07);
+    --theme: #141413;
+    --entry: #1f1e1b;
+    --primary: #faf9f5;
+    --secondary: #b0aea5;
+    --tertiary: #2a2925;
+    --content: #faf9f5;
+    --code-block-bg: #0f0f0e;
+    --code-bg: #2a2925;
+    --border: #3a3831;
+    --accent: #d97757;
+    --accent-hover: #eea082;
+    --accent-soft: rgba(217, 119, 87, 0.16);
+    --accent-blue: #6a9bcc;
+    --accent-green: #788c5d;
 }
 
 /* ─── Base Typography ─── */
 body {
-    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB",
-                 "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    font-family: 'Lora', Georgia, "PingFang SC", "Hiragino Sans GB",
+                 "Microsoft YaHei", "Noto Sans SC", serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'IBM Plex Mono', "PingFang SC", "Microsoft YaHei", monospace;
+    font-family: 'Poppins', Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight: 600;
 }
 
 code, pre, kbd {
-    font-family: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+    font-family: Menlo, Consolas, Monaco, monospace;
     font-feature-settings: "liga" 1, "calt" 1;
 }
 
 /* ─── Logo & Nav ─── */
 .logo a {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', Arial, sans-serif;
     font-weight: 600;
     letter-spacing: 0;
 }
 
 #menu a {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', Arial, sans-serif;
     font-size: 0.8rem;
     letter-spacing: 0;
     text-transform: uppercase;
@@ -88,7 +94,7 @@ code, pre, kbd {
 
 /* ─── profileMode — Title & Subtitle ─── */
 .profile_inner h1 {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', Arial, sans-serif;
     font-weight: 600;
     letter-spacing: 0;
     margin-top: 1rem;
@@ -98,6 +104,14 @@ code, pre, kbd {
 .profile_inner > span {
     color: var(--secondary);
     font-size: 0.95rem;
+}
+
+.profile-pref-note {
+    max-width: 34rem;
+    margin: 0.9rem auto 0;
+    color: var(--secondary);
+    font-size: 0.86rem;
+    line-height: 1.7;
 }
 
 /* ─── profileMode — Buttons ─── */
@@ -115,7 +129,7 @@ code, pre, kbd {
     border: 1.5px solid var(--accent);
     border-radius: 4px;
     padding: 0.3rem 1rem;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Poppins', Arial, sans-serif;
     font-size: 0.8rem;
     letter-spacing: 0;
     color: var(--accent);
@@ -152,13 +166,13 @@ code, pre, kbd {
 .entry-header h2 {
     font-size: 1.05rem;
     font-weight: 600;
-    font-family: 'IBM Plex Mono', "PingFang SC", monospace;
+    font-family: 'Poppins', Arial, "PingFang SC", sans-serif;
     transition: color 0.15s ease;
     margin: 0;
 }
 
 .entry-footer {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: Menlo, Consolas, Monaco, monospace;
     font-size: 0.77rem;
     color: var(--secondary);
     margin-top: 0.5rem;
@@ -266,7 +280,7 @@ code:not(pre > code) {
 /* ─── Post Meta ─── */
 .post-meta,
 .post-meta * {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: Menlo, Consolas, Monaco, monospace;
     font-size: 0.78rem;
 }
 
@@ -286,7 +300,7 @@ code:not(pre > code) {
     border-radius: 6px;
     background: var(--entry);
     color: var(--primary);
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Lora', Georgia, serif;
     width: 100%;
     padding: 0.5rem 0.8rem;
     transition: border-color 0.15s ease;
@@ -300,14 +314,14 @@ code:not(pre > code) {
 
 /* ─── Breadcrumbs ─── */
 .breadcrumbs {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: Menlo, Consolas, Monaco, monospace;
     font-size: 0.78rem;
     color: var(--secondary);
 }
 
 /* ─── Footer ─── */
 .footer {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: Menlo, Consolas, Monaco, monospace;
     font-size: 0.78rem;
     color: var(--secondary);
 }
@@ -353,12 +367,12 @@ code:not(pre > code) {
 .topic-card:hover {
     border-color: var(--topic-accent, var(--accent));
     transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 8px 22px rgba(20, 20, 19, 0.08);
 }
 
 .topic-index,
 .topic-count {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: Menlo, Consolas, Monaco, monospace;
     font-size: 0.75rem;
     color: var(--topic-accent, var(--accent));
     white-space: nowrap;
@@ -380,7 +394,7 @@ code:not(pre > code) {
 }
 
 .topic-body strong {
-    font-family: 'IBM Plex Mono', "PingFang SC", monospace;
+    font-family: 'Poppins', Arial, "PingFang SC", sans-serif;
     font-size: 1rem;
     color: var(--primary);
 }
@@ -469,7 +483,7 @@ code:not(pre > code) {
 
 .topic-post-meta {
     color: var(--secondary);
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: Menlo, Consolas, Monaco, monospace;
     font-size: 0.76rem;
 }
 
@@ -490,7 +504,7 @@ code:not(pre > code) {
     left: max(16px, env(safe-area-inset-left));
     bottom: max(16px, env(safe-area-inset-bottom));
     z-index: 80;
-    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: 'Poppins', Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 .pref-toggle {
@@ -503,9 +517,9 @@ code:not(pre > code) {
     border-radius: 50%;
     background: var(--entry);
     color: var(--primary);
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 8px 24px rgba(20, 20, 19, 0.14);
     cursor: pointer;
-    font: 600 0.95rem/1 'IBM Plex Mono', monospace;
+    font: 600 0.95rem/1 'Poppins', Arial, sans-serif;
 }
 
 .pref-toggle:hover,
@@ -526,7 +540,7 @@ code:not(pre > code) {
     border-radius: 8px;
     background: var(--entry);
     color: var(--primary);
-    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.18);
+    box-shadow: 0 18px 48px rgba(20, 20, 19, 0.18);
 }
 
 .pref-panel[hidden] {
@@ -544,8 +558,12 @@ code:not(pre > code) {
     font-size: 0.78rem;
 }
 
-.pref-panel select {
+.pref-panel select,
+.pref-panel input[type="range"] {
     width: 100%;
+}
+
+.pref-panel select {
     min-height: 36px;
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -559,6 +577,28 @@ code:not(pre > code) {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.pref-range-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.65rem;
+    align-items: center;
+}
+
+.pref-panel input[type="range"] {
+    accent-color: var(--accent);
+}
+
+.pref-panel output {
+    min-width: 48px;
+    color: var(--secondary);
+    font: 0.76rem/1 Menlo, Consolas, Monaco, monospace;
+    text-align: right;
+}
+
+body:not(.list) .main {
+    max-width: calc(var(--reader-width, 1040px) + var(--gap) * 2);
 }
 
 /* Font presets */
@@ -602,6 +642,12 @@ html[data-ui-font="mono"] h6 {
     font-family: 'IBM Plex Mono', "PingFang SC", "Microsoft YaHei", monospace;
 }
 
+html[data-code-font="system"] code,
+html[data-code-font="system"] pre,
+html[data-code-font="system"] kbd {
+    font-family: Menlo, Consolas, Monaco, monospace;
+}
+
 html[data-code-font="cascadia"] code,
 html[data-code-font="cascadia"] pre,
 html[data-code-font="cascadia"] kbd {
@@ -622,16 +668,19 @@ html[data-code-font="consolas"] kbd {
 
 /* Code color presets */
 html[data-code-theme="ink"] {
-    --code-fg: #CAD3F5;
-    --code-comment: #6E738D;
-    --code-keyword: #C6A0F6;
-    --code-string: #A6DA95;
-    --code-number: #F5A97F;
-    --code-function: #8AADF4;
-    --code-type: #EED49F;
-    --code-operator: #91D7E3;
-    --code-deleted: #ED8796;
-    --code-inserted: #A6DA95;
+    --code-block-bg: #141413;
+    --code-bg: #e8e6dc;
+    --code-fg: #faf9f5;
+    --inline-code-fg: #9f4f35;
+    --code-comment: #b0aea5;
+    --code-keyword: #d97757;
+    --code-string: #8aa06c;
+    --code-number: #dca07f;
+    --code-function: #8bb5dc;
+    --code-type: #e2c36e;
+    --code-operator: #6a9bcc;
+    --code-deleted: #d97757;
+    --code-inserted: #788c5d;
 }
 
 html[data-code-theme="github"] {
