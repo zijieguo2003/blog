@@ -1,5 +1,13 @@
 # ZijieGuo 技术博客 — 协作指南
 
+## 维护约定
+
+**每次对项目做出实质性修改后，必须同步更新 `AGENTS.md`。**
+需要更新的内容包括但不限于：视觉主题调整、新增功能页面、关键文件变更、已知问题的发现或修复。
+`AGENTS.md` 是面向所有 AI 代理的项目状态快照，保持它准确是协作的基础。
+
+---
+
 ## 技术栈
 
 - **框架**: Hugo (Extended)
@@ -62,11 +70,12 @@ cover:
 ## 关键文件
 
 - `hugo.toml` — 主配置（profileMode、搜索、菜单、社交链接）
-- `assets/css/extended/custom.css` — 自定义样式（Ink Blueprint 主题）
+- `assets/css/extended/custom.css` — 自定义样式（Claude 品牌配色：Pampas/Crail/Cloudy）
 - `content/search.md` — 搜索页（layout: search）
 - `content/archives.md` — 归档页（layout: archives）
-- `static/images/avatar.svg` — 首页头像占位（替换为真实头像）
-- `static/favicon.svg` — 站点图标（替换为真实图标）
+- `static/images/avatar.jpg` — 首页头像（吉伊 Chiikawa）
+- `static/favicon.jpg` — 站点图标（吉伊 Chiikawa）
+- `AGENTS.md` — 项目状态快照，供 AI 代理上下文同步（每次修改后需维护）
 
 ## SEO 说明
 
