@@ -86,6 +86,11 @@ code, pre, kbd {
     font-feature-settings: "liga" 1, "calt" 1;
 }
 
+/* override PaperMod: list pages use --code-bg by default, making header look white */
+.list {
+    background: var(--theme);
+}
+
 /* ─── Logo & Nav ─── */
 .header {
     position: sticky;
