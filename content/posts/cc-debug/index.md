@@ -34,6 +34,7 @@ ShowShareButtons: true
 
 Lead Agent Loop 流程：
 （1）context 处理流程：
+
 ①压缩： micro compact 和 auto
 ![Pasted image 20260423151534.png](Pasted-image-20260423151534.png)
 ②取出“后台 background 线程刚跑完的任务结果”
