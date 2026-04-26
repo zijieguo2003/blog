@@ -34,9 +34,9 @@ ShowShareButtons: true
 
 Lead Agent Loop 流程：
 （1）context 处理流程：
-
 ①压缩： micro compact 和 auto
 ![Pasted image 20260423151534.png](Pasted-image-20260423151534.png)
+
 ②取出“后台 background 线程刚跑完的任务结果”
 - 整理成一条消息，塞回 messages（user），下一次调用 LLM 时，模型就能知道后台任务已经完成了。
 -  <background-results>...</background-results>标签包裹起来，告诉模型是事件通知
