@@ -800,6 +800,30 @@ plan_requests = {
 ```
 lead 根据不同的 id 审批不同的结果，根据请求发送人'from'发回去~
 
+> **为什么要有 `request_id`？**
+>
+> 看到上面三条并发请求，你可能会觉得这设计理所当然——但如果没有 `request_id`，会发生什么？
+>
+> Lead 说"我同意"，Alice 不知道审批的是 Plan A 还是 Plan B，Bob 也不确定自己的 Plan C 有没有被批准。消息传到了，却没办法对应到具体的请求——这就是"歧义"。
+>
+> `request_id` 解决的正是这个问题：让每一条响应都能精确找回它对应的请求。这个思想在网络协议里并不陌生——TCP 用序列号（seq / ack）来追踪字节流，确保每一段数据都能被确认；Team Protocol 用 `request_id` 来追踪业务请求，确保每一个审批结果都能路由回发起方。
+>
+> 两者核心思想一致：**给消息编号，用编号做关联**。区别在于粒度——TCP 处理的是连续字节流的确认，`request_id` 处理的是离散业务事件的确认。
+
+> **Team Protocol 本质上是什么？**
+>
+> 可以给它一个定义：Team Protocol 是多 Agent 系统里的**应用层协作协议**，规定了 Agent 之间如何发起请求、如何编号、如何确认、如何维护状态、如何把结果路由回原请求方。它至少包含五个组成部分：
+>
+> **① 消息格式**——定义 Agent 之间通信的"包头 + 载荷"，例如 `type`、`request_id`、`from`、`plan` 等字段，类似 TCP segment 的 header + payload。
+>
+> **② 请求编号**——每个请求分配唯一的 `request_id`，保证响应能精确找回原请求，类似 TCP 的序列号。
+>
+> **③ 状态表**——`plan_requests[req_id]` 记录每条请求的发起方与当前状态（`pending / approved / rejected`），类似 TCP 的连接状态表。
+>
+> **④ 收件箱（inbox）**——每个 Agent 持有一个 inbox，消息先落入 inbox，下一轮 agent loop 读取后再注入上下文，类似 TCP 的接收缓冲区。
+>
+> **⑤ 状态迁移**——请求从 `pending` 流转到 `approved / rejected`，Agent 自身从 `active` 经 `shutdown_requested` 到 `shutdown`，整个过程由明确的事件驱动，与 TCP 状态机的设计思路如出一辙。
+
 ## 10.3 请求关联
 - request_id 是这章最核心的相关键，发起和响应必须一致。
 - plan approval 在代码里是“协议约束 + 提示词约束”，不是硬阻塞事务；也就是 teammate 是否真的等审批，部分取决于模型是否遵守协议。
