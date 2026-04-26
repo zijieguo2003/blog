@@ -32,8 +32,8 @@ ShowShareButtons: true
 
 **记录：**
 
-Lead Agent Loop 流程：
-（1）context 处理流程：
+Lead Agent Loop 流程： </br>
+（1）context 处理流程： </br>
 ①压缩： micro compact 和 auto
 ![Pasted image 20260423151534.png](Pasted-image-20260423151534.png)
 
@@ -112,7 +112,22 @@ bash 阻塞 5 s，返回完整输出
 占坑
 
 # 功能点 2：多工具 Dispatch（s02）
-**补充：TOOLS 变量：**
+补充：
+（1）Dispatch：
+Dispatch = "把模型的意图路由到实际执行"
+多工具 Dispatch 的关键优势：
+- 一次模型推理，可以 dispatch 多个 tool call，Claude 的一轮响应里可以同时发起多个工具请求，而不是 one-by-one 地串行等待。`
+```bash
+【单工具】
+Claude 输出 → [tool_use: read_file] → dispatch → 执行 → 返回结果
+
+【多工具】
+Claude 输出 → [tool_use: read_file]
+             [tool_use: bash: grep ...]     → dispatch（并行/串行）→ 批量执行 → 聚合结果
+             [tool_use: search_codebase]
+```
+
+（2）TOOLS 变量：
 TOOLS = [
     {"name": "...", "description": "...", "input_schema": {...}},
     ...
