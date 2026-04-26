@@ -7,18 +7,18 @@
 
 /* ─── Light Mode Variables ─── */
 :root {
-    --theme: #faf9f5;
-    --entry: #fffdfa;
+    --theme: #F4F3EE;
+    --entry: #FDFCF9;
     --primary: #141413;
-    --secondary: #7b7971;
-    --tertiary: #e8e6dc;
+    --secondary: #B1ADA1;
+    --tertiary: #E3E1D9;
     --content: #141413;
-    --code-block-bg: #f4f1e8;
-    --code-bg: #e8e6dc;
+    --code-block-bg: #EAE8E0;
+    --code-bg: #E3E1D9;
     --code-fg: #141413;
-    --inline-code-fg: #d97757;
-    --code-comment: #b0aea5;
-    --code-keyword: #d97757;
+    --inline-code-fg: #C15F3C;
+    --code-comment: #B1ADA1;
+    --code-keyword: #C15F3C;
     --code-string: #059669;
     --code-number: #d97706;
     --code-name: #141413;
@@ -28,10 +28,10 @@
     --code-operator: #6a9bcc;
     --code-deleted: #c0362c;
     --code-inserted: #059669;
-    --border: #dedbd0;
-    --accent: #d97757;
-    --accent-hover: #b95f42;
-    --accent-soft: rgba(217, 119, 87, 0.12);
+    --border: #D8D5CC;
+    --accent: #C15F3C;
+    --accent-hover: #A34F30;
+    --accent-soft: rgba(193, 95, 60, 0.10);
     --accent-blue: #6a9bcc;
     --accent-green: #788c5d;
     --reader-width: 1040px;
@@ -87,11 +87,16 @@ code, pre, kbd {
 }
 
 /* ─── Logo & Nav ─── */
+/* list pages default to --code-bg; override to keep all backgrounds consistent */
+.list {
+    background: var(--theme);
+}
+
 .header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--code-bg);
+    background: var(--theme);
     border-bottom: 1px solid var(--border);
 }
 
@@ -803,12 +808,12 @@ html[data-code-theme="github"] {
 }
 
 html[data-code-theme="anthropic"] {
-    --code-block-bg: #f4f1e8;
-    --code-bg: #e8e6dc;
+    --code-block-bg: #EAE8E0;
+    --code-bg: #E3E1D9;
     --code-fg: #141413;
-    --inline-code-fg: #d97757;
-    --code-comment: #b0aea5;
-    --code-keyword: #d97757;
+    --inline-code-fg: #C15F3C;
+    --code-comment: #B1ADA1;
+    --code-keyword: #C15F3C;
     --code-string: #059669;
     --code-number: #d97706;
     --code-name: #141413;
