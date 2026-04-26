@@ -9,10 +9,10 @@
 :root {
     --theme: #faf9f5;
     --entry: #fffdfa;
-    --primary: #141413;
+    --primary: #3d3929;
     --secondary: #7b7971;
     --tertiary: #e8e6dc;
-    --content: #141413;
+    --content: #3d3929;
     --code-block-bg: #141413;
     --code-bg: #e8e6dc;
     --code-fg: #faf9f5;
@@ -88,8 +88,8 @@ code, pre, kbd {
 
 /* ─── Logo & Nav ─── */
 .header {
-    background: color-mix(in srgb, var(--theme) 92%, var(--entry));
-    border-bottom: 1px solid var(--tertiary);
+    background: var(--theme);
+    border-bottom: 1px solid var(--border);
 }
 
 .header-nav {
@@ -795,21 +795,21 @@ html[data-code-theme="github"] {
 }
 
 html[data-code-theme="anthropic"] {
-    --code-block-bg: #f1e7d6;
-    --code-bg: #e7dccb;
-    --code-fg: #241c15;
-    --inline-code-fg: #743018;
-    --code-comment: #695d50;
-    --code-keyword: #743018;
-    --code-string: #28593a;
-    --code-number: #7f4517;
-    --code-name: #241c15;
-    --code-punctuation: #6f5138;
-    --code-function: #573a83;
-    --code-type: #5a4a20;
-    --code-operator: #623d2b;
-    --code-deleted: #873232;
-    --code-inserted: #2f633d;
+    --code-block-bg: #f0ede4;
+    --code-bg: #e8e5dc;
+    --code-fg: #3d3929;
+    --inline-code-fg: #bd5d3a;
+    --code-comment: #b0aea5;
+    --code-keyword: #d97757;
+    --code-string: #788c5d;
+    --code-number: #bd5d3a;
+    --code-name: #3d3929;
+    --code-punctuation: #8c8476;
+    --code-function: #6a9bcc;
+    --code-type: #7a6a3a;
+    --code-operator: #6a9bcc;
+    --code-deleted: #c0362c;
+    --code-inserted: #788c5d;
 }
 
 html[data-code-theme="one-dark"] {
