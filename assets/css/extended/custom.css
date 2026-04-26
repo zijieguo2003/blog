@@ -9,25 +9,25 @@
 :root {
     --theme: #faf9f5;
     --entry: #fffdfa;
-    --primary: #3d3929;
+    --primary: #141413;
     --secondary: #7b7971;
     --tertiary: #e8e6dc;
-    --content: #3d3929;
-    --code-block-bg: #141413;
+    --content: #141413;
+    --code-block-bg: #f4f1e8;
     --code-bg: #e8e6dc;
-    --code-fg: #faf9f5;
-    --inline-code-fg: #9f4f35;
+    --code-fg: #141413;
+    --inline-code-fg: #d97757;
     --code-comment: #b0aea5;
     --code-keyword: #d97757;
-    --code-string: #8aa06c;
-    --code-number: #dca07f;
-    --code-name: #faf9f5;
-    --code-punctuation: #d8d0bf;
-    --code-function: #8bb5dc;
-    --code-type: #e2c36e;
+    --code-string: #059669;
+    --code-number: #d97706;
+    --code-name: #141413;
+    --code-punctuation: #8c8476;
+    --code-function: #0369a1;
+    --code-type: #7c3aed;
     --code-operator: #6a9bcc;
-    --code-deleted: #d97757;
-    --code-inserted: #788c5d;
+    --code-deleted: #c0362c;
+    --code-inserted: #059669;
     --border: #dedbd0;
     --accent: #d97757;
     --accent-hover: #b95f42;
@@ -88,8 +88,17 @@ code, pre, kbd {
 
 /* ─── Logo & Nav ─── */
 .header {
-    background: var(--theme);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 249, 245, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
+}
+
+:root[data-theme="dark"] .header {
+    background: rgba(20, 20, 19, 0.92);
 }
 
 .header-nav {
@@ -307,7 +316,7 @@ code, pre, kbd {
 
 /* ─── Code Blocks ─── */
 .highlight {
-    border-radius: 6px;
+    border-radius: 12px;
     border: 1px solid var(--border);
     background: var(--code-block-bg);
     overflow: hidden;
@@ -334,10 +343,10 @@ code, pre, kbd {
 code:not(pre > code) {
     background: var(--code-bg);
     border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0.1em 0.45em;
+    border-radius: 4px;
+    padding: 1px 5px;
     font-size: 0.85em;
-    color: var(--primary);
+    color: var(--inline-code-fg);
 }
 
 /* ─── Tags ─── */
@@ -795,21 +804,21 @@ html[data-code-theme="github"] {
 }
 
 html[data-code-theme="anthropic"] {
-    --code-block-bg: #f0ede4;
-    --code-bg: #e8e5dc;
-    --code-fg: #3d3929;
-    --inline-code-fg: #bd5d3a;
+    --code-block-bg: #f4f1e8;
+    --code-bg: #e8e6dc;
+    --code-fg: #141413;
+    --inline-code-fg: #d97757;
     --code-comment: #b0aea5;
     --code-keyword: #d97757;
-    --code-string: #788c5d;
-    --code-number: #bd5d3a;
-    --code-name: #3d3929;
+    --code-string: #059669;
+    --code-number: #d97706;
+    --code-name: #141413;
     --code-punctuation: #8c8476;
-    --code-function: #6a9bcc;
-    --code-type: #7a6a3a;
+    --code-function: #0369a1;
+    --code-type: #7c3aed;
     --code-operator: #6a9bcc;
     --code-deleted: #c0362c;
-    --code-inserted: #788c5d;
+    --code-inserted: #059669;
 }
 
 html[data-code-theme="one-dark"] {
