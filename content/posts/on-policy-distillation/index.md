@@ -125,9 +125,7 @@ OPD 介于 SFT 和 RL 之间：
 
 OPD 最小化学生与教师之间的 reverse KL：
 $$
-D_{KL}(\pi_s \parallel \pi_T)
-=
-\mathbb{E}_{y\sim \pi_s}\left[\log \pi_s(y\mid x)-\log \pi_T(y\mid x)\right]
+D_{KL}(\pi_s \parallel \pi_T) = \mathbb{E}_{y\sim \pi_s}\left[\log \pi_s(y\mid x)-\log \pi_T(y\mid x)\right]
 $$
 等价于最大化：
 $$
