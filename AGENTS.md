@@ -75,6 +75,25 @@
 
 ---
 
+## 数学公式渲染（2026-05-25）
+
+KaTeX 通过 `layouts/partials/extend_head.html` 按需加载（CDN 0.16.11），仅当文章 frontmatter 含 `math: true` 或 `[params] math = true` 时启用。
+
+**前置条件：** `hugo.toml` 的 `[markup.goldmark.extensions.passthrough]` 已启用，块级 `$$...$$` / `\[...\]` 与行内 `$...$` / `\(...\)` 都不会被 Markdown 解析破坏，直接传给 KaTeX 渲染（需要 Hugo ≥ 0.122）。
+
+在文章中启用方式：
+
+```yaml
+---
+title: "带公式的文章"
+math: true
+---
+```
+
+不需要数学的文章不会触发 KaTeX 资源加载，无性能损耗。
+
+---
+
 ## 已知坑 & 覆盖说明
 
 ### 1. PaperMod 硬编码代码文字颜色
