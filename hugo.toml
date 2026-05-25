@@ -57,8 +57,14 @@ enableGitInfo = true
 [[params.postTopics]]
   name = "Harness工程"
   description = "围绕 Agent、工具调用、调试记录和工程化实践的系统笔记。"
-  match = ["Harness工程", "Claude Code", "Agent", "LLM", "源码阅读", "Debug"]
+  match = ["Harness工程", "Claude Code", "Agent", "源码阅读", "Debug"]
   accent = "#d97757"
+
+[[params.postTopics]]
+  name = "后训练"
+  description = "围绕 SFT、RL、蒸馏、On-Policy Distillation 等大模型后训练方法的笔记，含理论推导与工程实现。"
+  match = ["后训练", "强化学习", "蒸馏", "OPD", "RLHF", "对齐", "数学推导", "信息论"]
+  accent = "#5b8ac0"
 
 [[params.postTopics]]
   name = "生活随笔"

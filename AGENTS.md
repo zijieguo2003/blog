@@ -75,6 +75,20 @@
 
 ---
 
+## 文章专题（`hugo.toml` 的 `[[params.postTopics]]`）
+
+文章按 frontmatter 的 `tags / categories / keywords` 与每个 topic 的 `match` 列表做交集自动分组（实现在 `layouts/posts/list.html`）。当前 topic：
+
+| Topic | match 包含 | 典型代表 |
+|---|---|---|
+| **Harness工程** | `Claude Code`, `Agent`, `源码阅读`, `Debug` | cc-debug |
+| **后训练** | `后训练`, `强化学习`, `蒸馏`, `OPD`, `RLHF`, `对齐`, `数学推导`, `信息论` | on-policy-distillation, opd-derivation |
+| **生活随笔** | `生活`, `随笔` | hello-world |
+
+⚠️ match 列表不要放过于泛化的标签（比如 `LLM`），否则会污染其他 topic 的分类。新增 topic 时按"具体子领域标签"列举，而不是父类标签。
+
+---
+
 ## 数学公式渲染（2026-05-25）
 
 KaTeX 通过 `layouts/partials/extend_head.html` 按需加载（CDN 0.16.11），仅当文章 frontmatter 含 `math: true` 或 `[params] math = true` 时启用。

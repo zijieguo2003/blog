@@ -6,7 +6,7 @@ author: "ZijieGuo"
 description: "从自信息出发推导出 OPD 的完整数学结构：信息论 → KL 方向选择 → SFT/OPD 对应的 KL 方向 → reverse KL 经六步代数恒等变形得到 per-token dense reward 的 policy gradient 形式。"
 keywords: ["On-Policy Distillation", "OPD", "信息论", "KL 散度", "策略梯度", "反向 KL", "蒸馏", "强化学习"]
 
-tags: ["LLM", "强化学习", "蒸馏", "OPD", "信息论", "数学推导"]
+tags: ["LLM", "强化学习", "蒸馏", "OPD", "后训练", "信息论", "数学推导"]
 categories: ["技术"]
 
 draft: false
