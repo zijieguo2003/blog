@@ -52,7 +52,7 @@ $$
 
 前者称为 **forward KL**（期望对 $p$ 取），后者称为 **reverse KL**（期望对 $q$ 取）。这种不对称性不是数学瑕疵，而是 KL 散度在不同应用场景下行为差异的根源。
 
-具体来说，forward KL 在 $p(x) > 0$ 而 $q(x) \to 0$ 的位置会爆炸为 $+\infty$，这迫使 $q$ 必须在 $p$ 有支持的所有地方都保留概率质量——这种行为称为 **mass-covering**，$q$ 倾向变得宽而平坦。反过来，reverse KL 的期望只在 $q$ 有支持的地方计算，所以 $q$ 可以放弃 $p$ 的某些 mode，只锁定其中一个高概率区域——这种行为称为 **mode-seeking**，$q$ 倾向变得窄而锐利。
+具体来说，forward KL 在 $p(x) \gt 0$ 而 $q(x) \to 0$ 的位置会爆炸为 $+\infty$，这迫使 $q$ 必须在 $p$ 有支持的所有地方都保留概率质量——这种行为称为 **mass-covering**，$q$ 倾向变得宽而平坦。反过来，reverse KL 的期望只在 $q$ 有支持的地方计算，所以 $q$ 可以放弃 $p$ 的某些 mode，只锁定其中一个高概率区域——这种行为称为 **mode-seeking**，$q$ 倾向变得窄而锐利。
 
 > 这条性质决定了：**当我们设计蒸馏目标时，选 forward 还是 reverse KL，就已经决定了学生模型最终的"性格"**。
 
@@ -135,9 +135,9 @@ reward 衡量"这条轨迹有多好"，而 $\log \pi_T(y|x)$ 是老师赋予轨�
 
 - 老师认为 "因此" 在这个 context 下应该出现的概率是 $\pi_T = 0.6$ → $\log \pi_T = -0.51$
 - 学生当前认为 "因此" 应该出现的概率是 $\pi_s = 0.1$ → $\log \pi_s = -2.30$
-- 该 token 的 dense reward $r_t = -0.51 - (-2.30) = +1.79 > 0$
+- 该 token 的 dense reward $r_t = -0.51 - (-2.30) = +1.79 \gt 0$
 
-优化方向：提升学生在这个 context 下输出 "因此" 的概率。反过来如果学生 rollout 出 "然而"，老师觉得 $\pi_T = 0.02$ 而学生当前是 $\pi_s = 0.3$，则 $r_t = -3.91 + 1.20 = -2.71 < 0$，抑制。**老师 log-prob 在做的事就是 reward 在做的事**：告诉学生"这一步走得对不对、对多少"。所以 (A) 项叫 reward 项是名副其实的——它在形式、语义、和理论结构上都精确对应着 RL 中的奖励信号。
+优化方向：提升学生在这个 context 下输出 "因此" 的概率。反过来如果学生 rollout 出 "然而"，老师觉得 $\pi_T = 0.02$ 而学生当前是 $\pi_s = 0.3$，则 $r_t = -3.91 + 1.20 = -2.71 \lt 0$，抑制。**老师 log-prob 在做的事就是 reward 在做的事**：告诉学生"这一步走得对不对、对多少"。所以 (A) 项叫 reward 项是名副其实的——它在形式、语义、和理论结构上都精确对应着 RL 中的奖励信号。
 
 ### 第二步：对 $\theta$ 求梯度，处理"期望分布也含 $\theta$"的难点
 
@@ -200,16 +200,16 @@ $$
 LLM 是自回归生成，任何轨迹的 log-likelihood 都可以按 token 分解：
 
 $$
-\log\pi(y|x) = \sum_{t=1}^{T}\log\pi(y_t\mid x, y_{<t})
+\log\pi(y|x) = \sum_{t=1}^{T}\log\pi(y_t\mid x, y_{\lt t})
 $$
 
 代入 advantage：
 
 $$
-A(y) = \sum_{t=1}^{T}\underbrace{\big[\log\pi_T(y_t|x,y_{<t}) - \log\pi_s(y_t|x,y_{<t})\big]}_{r_t\;:\;\text{第 }t\text{ 个 token 的 dense reward}}
+A(y) = \sum_{t=1}^{T}\underbrace{\big[\log\pi_T(y_t|x,y_{\lt t}) - \log\pi_s(y_t|x,y_{\lt t})\big]}_{r_t\;:\;\text{第 }t\text{ 个 token 的 dense reward}}
 $$
 
-至此 dense reward 的形式自然浮现：**每生成一个 token，老师都基于学生当前位置的 context 给出一个连续标量 $r_t$**。$r_t > 0$ 表示"老师认为这个 token 比学生采样的更应该出现"，优化时会强化这个 token；$r_t < 0$ 则抑制。整段轨迹的 advantage 就是这些 per-token reward 的累加。
+至此 dense reward 的形式自然浮现：**每生成一个 token，老师都基于学生当前位置的 context 给出一个连续标量 $r_t$**。$r_t \gt 0$ 表示"老师认为这个 token 比学生采样的更应该出现"，优化时会强化这个 token；$r_t \lt 0$ 则抑制。整段轨迹的 advantage 就是这些 per-token reward 的累加。
 
 这就是为什么 OPD 看起来"像一个有老师逐 token 打分的 RL"——因为它在数学上**就是**。从信息论一路推下来，没有任何近似，只有恒等变形。
 
@@ -236,7 +236,7 @@ $$
 第一，工程上实际不需要走 REINFORCE。因为 logits 是可微的，可以直接对每个 token 位置算 per-token reverse KL 作为 loss，做监督式 backward：
 
 $$
-\mathcal{L}_{\text{OPD,impl}} = \sum_{t=1}^{T} D_{KL}\!\big(\pi_s(\cdot|x,y_{<t}) \,\|\, \pi_T(\cdot|x,y_{<t})\big)
+\mathcal{L}_{\text{OPD,impl}} = \sum_{t=1}^{T} D_{KL}\!\big(\pi_s(\cdot|x,y_{\lt t}) \,\|\, \pi_T(\cdot|x,y_{\lt t})\big)
 $$
 
 这本质上和第五步推出来的 policy gradient 等价，但因为不需要 score function 估计，方差更小、训练更稳定。verl 里很多 distillation loss 都是这么实现的。

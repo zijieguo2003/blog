@@ -46,7 +46,7 @@ LLM 的训练方法可以划分为三大阶段：①pretrain ②mid-train（通�
 
 LLM 本质上是一个**条件概率分布**：给定 prompt $x$，输出对所有可能 response $y$ 的概率分布
 $$
-\pi_\theta(y \mid x)=\prod_{t=1}^{T}\pi_\theta(y_t \mid x,y_{<t})
+\pi_\theta(y \mid x)=\prod_{t=1}^{T}\pi_\theta(y_t \mid x,y_{\lt t})
 $$
 所以无论是 SFT、RL 还是 OPD，本质上都是在**调整预训练模型的概率分布**。
 
