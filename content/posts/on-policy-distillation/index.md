@@ -123,6 +123,8 @@ OPD 介于 SFT 和 RL 之间：
 - **像 SFT**：有教师模型提供 dense 监督信号
 - **像 RL**：用的是学生模型自己 rollout 的轨迹
 
+![OPD 在 SFT 和 RL 之间的位置示意](Pasted-image-20260525095647.png)
+
 OPD 最小化学生与教师之间的 reverse KL：
 $$
 D_{KL}(\pi_s \parallel \pi_T) = \mathbb{E}_{y\sim \pi_s}\left[\log \pi_s(y\mid x)-\log \pi_T(y\mid x)\right]
@@ -138,6 +140,8 @@ $$
 
 所以 OPD 很像"有老师逐 token 打分的 RL"。这一对应关系的完整六步代数推导，写在另一篇 [从信息论到 On-Policy Distillation：一次完整的推导](../opd-derivation/) 里。
 
+![OPD 与 RL 的结构对比](Pasted-image-20260525112415.png)
+
 ### 2.4 一句话类比：SFT、RL、OPD 的区别
 
 为方便记忆，可以用三句口语化的类比把三者钉在脑子里：
@@ -145,6 +149,8 @@ $$
 - **SFT**：别人给答案，我照着学（外部分布强拉齐 → "整体搬家"）
 - **RL**：我自己做题，奖励告诉我大方向（自身分布局部重塑 → "局部调参"）
 - **OPD**：我自己做题，老师对我的每一步细粒度讲评（自身分布 + dense 指导 → "原地练习 + 高密度指导"）
+
+![SFT / RL / OPD 三种范式对比](Pasted-image-20260525112331.png)
 
 OPD 最值得记住的点不是"有老师"，而是：
 
@@ -211,6 +217,8 @@ OPD 在持续学习场景中的优势同样来自上面的"on-policy 即隐式�
 
 **设置：** Qwen 3-8 B-Base 上，先用 OpenThoughts-3 做 SFT 400 K prompts（达到 60%），再对比三种 post-training。
 
+![AIME'24 上 On-policy distillation 与 SFT / RL 的样本效率对比](Pasted-image-20260525112447.png)
+
 |方法|AIME'24|计算量（相对）|
 |---|---|---|
 |SFT 继续扩展到 2 M（推测）|~70%|1×|
@@ -224,6 +232,8 @@ OPD 在持续学习场景中的优势同样来自上面的"on-policy 即隐式�
 ### 4.2 Self-distillation 效率对比
 
 **设置：** 从 Qwen 3-8 B-Base 出发，先跑 RL 得到一个好的教师，再用 on-policy distillation 把这个策略蒸馏回基础模型。
+
+![Self-distillation：OPD 与 RL 的步数对比](Pasted-image-20260525114540.png)
 
 ```
 On-policy distillation：10 步内 KL → 0，AIME 恢复教师水平
@@ -239,6 +249,8 @@ RL：需要 70 步达到同等水平
 
 **设置：** 只用 1 道题，训练 20 步，每步 256 个 rollout。
 
+![单题多轮训练：reverse KL 学分布而非记答案](Pasted-image-20260525114558.png)
+
 ```
 结论：单题多轮训练足以复现教师在 AIME'24 的完整性能
 原因：reverse KL 学的是分布，不是记忆答案
@@ -251,6 +263,10 @@ RL：需要 70 步达到同等水平
 
 **设置：** Qwen 3-8 B 在内部文档上做 mid-training，观察 IF-eval（指令遵循）的退化与恢复。
 
+![Mid-training 后的 IF-eval 退化曲线](Pasted-image-20260525114426.png)
+
+![不同 mid-train 配比下的 IF-eval 恢复曲线](Pasted-image-20260525114444.png)
+
 |阶段|内部 QA（知识）|IF-eval（指令）|
 |---|---|---|
 |原始 Qwen 3-8 B|18%|85%|
@@ -259,6 +275,9 @@ RL：需要 70 步达到同等水平
 |**+ midtrain (70%) + distill**|**41%**|**83%**|
 
 - 任何比例的 mid-training 都会破坏 IF-eval，LoRA 也无法避免
+
+![Mid-training 各比例下 LoRA vs full FT 对 IF-eval 的影响](Pasted-image-20260525114506.png)
+
 - On-policy distillation 用早期 checkpoint 作为教师，几乎完全恢复指令遵循能力
 - 知识和 chat 能力之间还有正向迁移
 

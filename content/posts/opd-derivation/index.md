@@ -139,6 +139,76 @@ reward 衡量"这条轨迹有多好"，而 $\log \pi_T(y|x)$ 是老师赋予轨�
 
 优化方向：提升学生在这个 context 下输出 "因此" 的概率。反过来如果学生 rollout 出 "然而"，老师觉得 $\pi_T = 0.02$ 而学生当前是 $\pi_s = 0.3$，则 $r_t = -3.91 + 1.20 = -2.71 \lt 0$，抑制。**老师 log-prob 在做的事就是 reward 在做的事**：告诉学生"这一步走得对不对、对多少"。所以 (A) 项叫 reward 项是名副其实的——它在形式、语义、和理论结构上都精确对应着 RL 中的奖励信号。
 
+#### 插话：为什么 $-\log\pi_s(y\mid x)$ 配叫 "KL / entropy 风格约束项"？
+
+这个理解其实是把 (B) 项 $-\log\pi_s(y|x)$ 既看成"熵正则"，又看成"隐式的反向 KL 约束"。把这两层意思拆开讲。
+
+**第一层：它就是熵 —— 防止学生坍缩**
+
+(B) 项的期望形式是：
+$$
+\mathbb{E}_{y\sim\pi_s}[-\log\pi_s(y|x)] = H(\pi_s)
+$$
+
+这是上一节香农熵的定义。在我们最大化的目标里它带正号：
+$$
+\max_\theta\ \mathbb{E}_{y\sim\pi_s}[\log\pi_T(y|x)] + H(\pi_s)
+$$
+
+意思是 **优化器在追求 reward 的同时，还想让学生分布尽量"扁平"**。极端情况想想就明白：如果只有 reward 项，最优解会是把所有概率质量塌到 $\arg\max_y \log\pi_T(y|x)$ 这一个点上（贪心 mode），熵 = 0，学生变成一个确定性分布。加上 $+H(\pi_s)$ 之后，这种坍缩会被惩罚——因为坍缩 → 熵变小 → 目标函数变小。
+
+所以 (B) 项的作用是 **保持学生的输出多样性，防止它退化成只会输出一种轨迹的确定性策略**。在 LLM 蒸馏里这非常重要：学生如果坍缩，生成会失去 temperature > 0 的随机采样能力，在需要多样性的任务（创作、采样多个候选答案）上直接崩。
+
+**第二层：为什么又叫"KL 风格约束"**
+
+这是更隐蔽的一层意思。(B) 项虽然写出来只是 $-\log\pi_s$，但它 **和某种 KL 约束是等价的**。具体来说，回顾 reverse KL 的展开：
+$$
+D_{KL}(\pi_s \parallel \pi_T) = \underbrace{\mathbb{E}_{y\sim\pi_s}[\log\pi_s]}_{=\,-H(\pi_s)} - \underbrace{\mathbb{E}_{y\sim\pi_s}[\log\pi_T]}_{\text{reward}}
+$$
+
+整理一下：
+$$
+H(\pi_s) = \underbrace{\mathbb{E}_{y\sim\pi_s}[\log\pi_T]}_{\text{reward 项}} - D_{KL}(\pi_s \parallel \pi_T)
+$$
+
+也就是说，**熵正则项 $H(\pi_s)$ 本身就内含一个 reverse KL 约束**：它一边和 reward 项有关，一边把学生"拉向" $\pi_T$。
+
+更标准的视角来自 entropy-regularized RL 的最优解理论。可以证明，对目标 $\max\ \mathbb{E}[R] + H(\pi_s)$，最优策略是：
+$$
+\pi_s^*(y|x) \propto \exp(R(y)) = \pi_T(y|x)
+$$
+
+（用 reward $R = \log\pi_T$ 代入）。换句话说，**熵正则项恰好让 $\pi_s$ 和 $\pi_T$ 之间产生一个 KL 形式的"引力"**，最终把学生拉到老师那里去。
+
+**一个更直观的对比：和 PPO 的 KL 惩罚类比**
+
+在 PPO/RLHF 里你经常看到这种 loss：
+$$
+\mathcal{L}_{\text{PPO}} = -\mathbb{E}[R(y)] + \beta \cdot D_{KL}(\pi_\theta \parallel \pi_{\text{ref}})
+$$
+
+KL 惩罚项防止策略偏离参考模型太远。OPD 的结构其实和这个一模一样，只是身份对调：
+
+| 角色 | 在 OPD 里是谁 |
+| --- | --- |
+| 当前策略 $\pi_\theta$ | 优化对象 → $\pi_s$（学生） |
+| 参考策略 $\pi_{\text{ref}}$ | 不动的锚 → $\pi_T$（老师） |
+| reward $R$ | 外部信号 → $\log\pi_T$ |
+| KL 惩罚 | 显式 → 隐式藏在 $-\log\pi_s$ 项里 |
+
+PPO 的 KL 惩罚是手写的、可以调 $\beta$ 控制强度的；OPD 的 KL 约束是 **从 reverse KL 自动推出来的**，$\beta$ 隐含为 1。所以"KL / entropy 风格约束项"是非常准确的——它同时是熵正则（看 (B) 项自身），又是 KL 约束（看它和 reward 项的耦合）。这两种解读不是二选一，是一体两面。
+
+**没有这一项会发生什么**
+
+最后再用反事实强化一下直觉。假如目标里只有 reward 项，没有 (B)：
+$$
+\max_\theta\ \mathbb{E}_{y\sim\pi_s}[\log\pi_T(y|x)] \quad (\text{无熵正则})
+$$
+
+这等价于让学生不断把概率质量推向 $\log\pi_T$ 最大的那个 $y^*$ → 学生退化成 $\delta_{y^*}$ → mode collapse。**正是 (B) 项的存在，让学生在追逐老师的高分轨迹的同时，被强制保留一定的概率分散度，最终收敛到 $\pi_s = \pi_T$ 而不是 $\delta$**。
+
+所以一句话总结：**$-\log\pi_s$ 看起来像是"学生自己惩罚自己的概率"，实际上它在做两件事——维持熵防止坍缩，以及隐式地把学生拉向老师**。这就是为什么它配叫 "KL/entropy 风格约束项"。
+
 ### 第二步：对 $\theta$ 求梯度，处理"期望分布也含 $\theta$"的难点
 
 要做优化就得算 $\nabla_\theta J(\theta)$，但这里期望分布 $\pi_s$ 本身依赖 $\theta$，不能简单地把 $\nabla_\theta$ 塞进期望符号里面。先把期望展开成求和：
