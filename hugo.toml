@@ -109,6 +109,10 @@ enableGitInfo = true
   [[menu.main]]
     name = "搜索"
     url = "/search/"
+    weight = 25
+  [[menu.main]]
+    name = "关于"
+    url = "/about/"
     weight = 30
 
 [markup]
